@@ -1,0 +1,84 @@
+---
+title: "Trabalho No.1"
+output: html_notebook
+---
+
+# Exercício  
+
+## 1. Variável Aleatória Bernoulli  
+
+Seja \( X \sim \text{Bernoulli} \left(\frac{1}{2} \right) \) e considere todas as possíveis amostras aleatórias de tamanho \( n = 4 \). Calcule \( \bar{X}_n \) e \( S_n^2 \) para cada uma das dezesseis amostras.  
+
+
+```{r}
+amostras <- expand.grid(rep(list(c(0,1)), 4)); amostras
+
+medias <- apply(amostras,1, mean); medias
+
+variancia <- apply(amostras,1, var); variancia
+
+```
+ 
+
+Encontre a função de probabilidade de \( \bar{X}_n \) e \( S_n^2 \).
+
+```{r}
+#Função de Probabilidade para a MÉDIA;
+freq_media <- table(medias)
+prob_media <- freq_media / sum(freq_media); prob_media
+
+#Função de Probabilidade para a VARIÂNCIA;
+
+freq_var <- table(variancia)
+prob_var <- freq_var / sum(freq_var); prob_var
+
+
+```
+
+
+### 2. Função Distância \( \Delta(F, G) \)
+
+Considere a função distância \( \Delta(F, G) \):
+
+\[
+\Delta(F, G) = \int_{-\infty}^{\infty} \left[ F(x) - G(x) \right]^2 \cdot \frac{1}{2} \left[ F'(x) + G'(x) \right]^2 \, dx,
+\]
+
+onde \( F \) e \( G \) são distribuições absolutamente contínuas.
+
+Sejam \( X_1, \dots, X_m \) uma amostra aleatória de \( F \) e \( Y_1, \dots, Y_n \) uma amostra aleatória de \( G \), ambas independentes.
+
+Sabemos que a **U-estatística** \( U(X, Y) \) é dada por:
+
+\[
+U(X, Y) = \frac{1}{{m \choose 2} \cdot {n \choose 2}} \sum_{i_1 < i_2} \sum_{k_1 < k_2} \varphi(X_{i_1}, X_{i_2}, Y_{k_1}, Y_{k_2}),
+\]
+
+onde
+
+\[
+\varphi(X_1, X_2, Y_1, Y_2) =
+\begin{cases}
+1, & \text{se } \max(X_1, X_2) < \min(Y_1, Y_2) \text{ ou se } \max(Y_1, Y_2) < \min(X_1, X_2), \\
+0, & \text{caso contrário.}
+\end{cases}
+\]
+
+Esta fórmula permite encontrar o **estimador não viciado de mínima variância** para \( \Delta(F, G) \) como:
+
+\[
+\hat{\Delta}(F, G) = \frac{1}{2} U(X, Y) - \frac{1}{6}.
+\]
+
+
+
+A) Escreva uma função R para encontrar estimativas de ∆( b F, G),
+considerando valores diversos de tamanhos de cada amostra.
+
+```{r}
+
+
+
+```
+
+

@@ -7,10 +7,12 @@ output: html_notebook
 
 ## 1. Variável Aleatória Bernoulli  
 
-Seja \( X \sim \text{Bernoulli} \left(\frac{1}{2} \right) \) e considere todas as possíveis amostras aleatórias de tamanho \( n = 4 \). Calcule \( \bar{X}_n \) e \( S_n^2 \) para cada uma das dezesseis amostras.  
+### Seja \( X \sim \text{Bernoulli} \left(\frac{1}{2} \right) \) e considere todas as possíveis amostras aleatórias de tamanho \( n = 4 \). Calcule \( \bar{X}_n \) e \( S_n^2 \) para cada uma das dezesseis amostras.  
 
 
 ```{r}
+set.seed(123)
+
 amostras <- expand.grid(rep(list(c(0,1)), 4)); amostras
 
 medias <- apply(amostras,1, mean); medias
@@ -20,7 +22,7 @@ variancia <- apply(amostras,1, var); variancia
 ```
  
 
-Encontre a função de probabilidade de \( \bar{X}_n \) e \( S_n^2 \).
+#### Encontre a função de probabilidade de \( \bar{X}_n \) e \( S_n^2 \).
 
 ```{r}
 #Função de Probabilidade para a MÉDIA;
@@ -64,6 +66,21 @@ onde
 \end{cases}
 \]
 
+```{r}
+phi <- function(X1, X2, Y1, Y2) {
+  
+  X_ord <- sort(c(X1, X2))
+  Y_ord <- sort(c(Y1, Y2))
+  
+  if (max(X_ord) < min(Y_ord) || max(Y_ord) < min(X_ord)) {
+    return(1)
+  } else {
+    return(0)
+  }
+}
+```
+
+
 Esta fórmula permite encontrar o **estimador não viciado de mínima variância** para \( \Delta(F, G) \) como:
 
 \[
@@ -72,10 +89,184 @@ Esta fórmula permite encontrar o **estimador não viciado de mínima variância
 
 
 
-A) Escreva uma função R para encontrar estimativas de ∆( b F, G),
-considerando valores diversos de tamanhos de cada amostra.
+#### A) Escreva uma função R para encontrar estimativas de ∆( b F, G), considerando valores diversos de tamanhos de cada amostra.
 
 ```{r}
+
+delta_est <- function(X, Y) {
+  
+  X <- sort(X)
+  Y <- sort(Y)
+  
+  m <- length(X)
+  n <- length(Y)
+  
+  u_sum <- 0
+  
+  for (i1 in 1:(m-1)) {
+    for (i2 in (i1+1):m) {
+      for (k1 in 1:(n-1)) {
+        for (k2 in (k1+1):n) {
+          u_sum <- u_sum + phi(X[i1], X[i2], Y[k1], Y[k2])
+        }
+      }
+    }
+  }
+  
+  # Estatística U(X,Y)
+  u_stat <- 1 / (choose(m, 2) * choose(n, 2)) * u_sum
+  
+  # Estimativa de Δ(F, G)
+  delta_est <- (1 / 2) * u_stat - 1/6
+  return(delta_est)
+}
+
+
+#Comparando duas normais com médias diferentes
+delta_est(rnorm(20, 10, 0.5), 
+          rnorm(35,0,0.5)) 
+
+
+#Comparando duas normais com médias iguais
+delta_est(rnorm(25, 0, 2), 
+          rnorm(35,0,2)) 
+
+
+#Comparando uma Normal com exponência
+delta_est(rnorm(35, 0, 1), 
+          rexp(50,2))
+
+
+
+
+
+
+```
+
+####  B) Gere amostras de tamanho 50, 100 e 150 das distribuições (i) Normal padrão, (ii) Cauchy padrão e (iii) t-Student(4). Considere estas como possíveis distribuições de referência.
+
+```{r}
+n_50 <- rnorm(50, mean = 0, sd = 1)
+c_50 <- rcauchy(50, location = 0, scale = 1)
+t_50 <- rt(50, df = 4)
+
+n_100 <- rnorm(100, mean = 0, sd = 1)
+c_100 <- rcauchy(100, location = 0, scale = 1)
+t_100 <- rt(100, df = 4)
+
+n_150 <- rnorm(150, mean = 0, sd = 1)
+c_150 <- rcauchy(150, location = 0, scale = 1)
+t_150 <- rt(150, df = 4)
+
+
+
+# Conf o layout para 3 gráficos lado a lado
+par(mfrow = c(3, 3))
+
+# Distribuição Normal
+hist(n_50, 
+     main = "Normal (n = 50)", 
+     col = "blue", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+
+hist(n_100, 
+     main = "Normal (n = 100)", 
+     col = "blue", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+
+hist(n_150, 
+     main = "Normal (n = 150)", 
+     col = "blue", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+
+# Distribuição Cauchy
+hist(c_50, 
+     main = "Cauchy (n = 50)", 
+     col = "green", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+hist(c_100, 
+     main = "Cauchy (n = 100)", 
+     col = "green", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+hist(c_150, 
+     main = "Cauchy (n = 150)", 
+     col = "green", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+# Distribuição t-Student
+hist(t_50, 
+     main = "t-Student (n = 50)", 
+     col = "red", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+hist(t_100, 
+     main = "t-Student (n = 100)", 
+     col = "red", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+
+hist(t_150, 
+     main = "t-Student (n = 150)", 
+     col = "red", 
+     breaks = 20, 
+     xlab = "x", 
+     probability = TRUE)
+
+par(mfrow = c(1, 1))
+```
+
+
+#### (c) Calcule as estimativas de ∆( b F, G) para cada amostra das distribuições de referência F obtidas no item (b) e a amostra da distribuição desconhecida G, obtida no arquivo de dados anexo.
+
+
+
+
+```{r}
+amostra_G <- scan("dados.csv", what = numeric(), sep = "\n")
+
+#Distribuição Normal Padrão e Amostra desconhecida G
+delta_est(n_50,amostra_G)
+
+delta_est(n_100,amostra_G)
+
+delta_est(n_150,amostra_G)
+
+#Distribuição T-Student (4) e Amostra desconhecida G
+
+delta_est(t_50,amostra_G)
+
+delta_est(t_100,amostra_G)
+
+delta_est(t_150,amostra_G)
+
+#Distribuição Cauchy Padrão e Amostra desconhecida G
+
+delta_est(c_50,amostra_G)
+
+delta_est(c_100,amostra_G)
+
+delta_est(c_150,amostra_G)
 
 
 

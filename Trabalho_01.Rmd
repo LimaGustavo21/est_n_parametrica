@@ -7,7 +7,7 @@ output: html_notebook
 
 ## 1. Variável Aleatória Bernoulli  
 
-### Seja \( X \sim \text{Bernoulli} \left(\frac{1}{2} \right) \) e considere todas as possíveis amostras aleatórias de tamanho \( n = 4 \). Calcule \( \bar{X}_n \) e \( S_n^2 \) para cada uma das dezesseis amostras.  
+Seja \( X \sim \text{Bernoulli} \left(\frac{1}{2} \right) \) e considere todas as possíveis amostras aleatórias de tamanho \( n = 4 \). Calcule \( \bar{X}_n \) e \( S_n^2 \) para cada uma das dezesseis amostras.  
 
 
 ```{r}
@@ -22,7 +22,7 @@ variancia <- apply(amostras,1, var); variancia
 ```
  
 
-#### Encontre a função de probabilidade de \( \bar{X}_n \) e \( S_n^2 \).
+##### Encontre a função de probabilidade de \( \bar{X}_n \) e \( S_n^2 \).
 
 ```{r}
 #Função de Probabilidade para a MÉDIA;
@@ -69,10 +69,7 @@ onde
 ```{r}
 phi <- function(X1, X2, Y1, Y2) {
   
-  X_ord <- sort(c(X1, X2))
-  Y_ord <- sort(c(Y1, Y2))
-  
-  if (max(X_ord) < min(Y_ord) || max(Y_ord) < min(X_ord)) {
+  if (max(X1, X2) < min(Y1, Y2) || max(Y1, Y2) < min(X1, X2)) {
     return(1)
   } else {
     return(0)
@@ -89,7 +86,7 @@ Esta fórmula permite encontrar o **estimador não viciado de mínima variância
 
 
 
-#### A) Escreva uma função R para encontrar estimativas de ∆( b F, G), considerando valores diversos de tamanhos de cada amostra.
+##### A) Escreva uma função R para encontrar estimativas de ∆( b F, G), considerando valores diversos de tamanhos de cada amostra.
 
 ```{r}
 
@@ -114,36 +111,43 @@ delta_est <- function(X, Y) {
   }
   
   # Estatística U(X,Y)
-  u_stat <- 1 / (choose(m, 2) * choose(n, 2)) * u_sum
+  u_stat <- (1 / (choose(m, 2) * choose(n, 2))) * u_sum
   
   # Estimativa de Δ(F, G)
   delta_est <- (1 / 2) * u_stat - 1/6
   return(delta_est)
 }
 
+```
 
+
+```{r}
 #Comparando duas normais com médias diferentes
-delta_est(rnorm(20, 10, 0.5), 
-          rnorm(35,0,0.5)) 
+
+f <-  rnorm(20, 10, 0.5)
+g <-  rnorm(35,0,0.5)
+  
+delta_est(f,g) 
 
 
 #Comparando duas normais com médias iguais
-delta_est(rnorm(25, 0, 2), 
-          rnorm(35,0,2)) 
 
+
+f <-  rnorm(25, 0, 2)
+g <-  rnorm(35,0,2)
+
+delta_est(f,g) 
 
 #Comparando uma Normal com exponência
-delta_est(rnorm(35, 0, 1), 
-          rexp(50,2))
 
+f <- rnorm(35, 0, 1)
+g <- rexp(50,2)
 
-
-
-
+delta_est(f,g) 
 
 ```
 
-####  B) Gere amostras de tamanho 50, 100 e 150 das distribuições (i) Normal padrão, (ii) Cauchy padrão e (iii) t-Student(4). Considere estas como possíveis distribuições de referência.
+#####  B) Gere amostras de tamanho 50, 100 e 150 das distribuições (i) Normal padrão, (ii) Cauchy padrão e (iii) t-Student(4). Considere estas como possíveis distribuições de referência.
 
 ```{r}
 n_50 <- rnorm(50, mean = 0, sd = 1)
@@ -164,111 +168,143 @@ t_150 <- rt(150, df = 4)
 par(mfrow = c(3, 3))
 
 # Distribuição Normal
-hist(n_50, 
-     main = "Normal (n = 50)", 
-     col = "blue", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(n_50, main = "Normal (n = 50)")
 
 
-hist(n_100, 
-     main = "Normal (n = 100)", 
-     col = "blue", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(n_100, main = "Normal (n = 100)")
 
 
-hist(n_150, 
-     main = "Normal (n = 150)", 
-     col = "blue", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(n_150, main = "Normal (n = 150)")
 
 
 # Distribuição Cauchy
-hist(c_50, 
-     main = "Cauchy (n = 50)", 
-     col = "green", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(c_50,  main = "Cauchy (n = 50)")
 
-hist(c_100, 
-     main = "Cauchy (n = 100)", 
-     col = "green", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(c_100, main = "Cauchy (n = 100)")
 
-hist(c_150, 
-     main = "Cauchy (n = 150)", 
-     col = "green", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(c_150, main = "Cauchy (n = 150)")
 
 # Distribuição t-Student
-hist(t_50, 
-     main = "t-Student (n = 50)", 
-     col = "red", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(t_50,main = "t-Student (n = 50)")
 
-hist(t_100, 
-     main = "t-Student (n = 100)", 
-     col = "red", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(t_100, main = "t-Student (n = 100)")
 
-
-hist(t_150, 
-     main = "t-Student (n = 150)", 
-     col = "red", 
-     breaks = 20, 
-     xlab = "x", 
-     probability = TRUE)
+hist(t_150,main = "t-Student (n = 150)")
 
 par(mfrow = c(1, 1))
 ```
 
 
-#### (c) Calcule as estimativas de ∆( b F, G) para cada amostra das distribuições de referência F obtidas no item (b) e a amostra da distribuição desconhecida G, obtida no arquivo de dados anexo.
+##### (c) Calcule as estimativas de ∆( b F, G) para cada amostra das distribuições de referência F obtidas no item (b) e a amostra da distribuição desconhecida G, obtida no arquivo de dados anexo.
 
 
 
 
 ```{r}
 amostra_G <- scan("dados.csv", what = numeric(), sep = "\n")
-
-#Distribuição Normal Padrão e Amostra desconhecida G
+```
+ - Distribuição Normal Padrão e Amostra desconhecida G;
+ 
+```{r}
 delta_est(n_50,amostra_G)
 
 delta_est(n_100,amostra_G)
 
 delta_est(n_150,amostra_G)
+```
+- Distribuição T-Student (4) e Amostra desconhecida G
 
-#Distribuição T-Student (4) e Amostra desconhecida G
-
+```{r}
 delta_est(t_50,amostra_G)
 
 delta_est(t_100,amostra_G)
 
 delta_est(t_150,amostra_G)
 
-#Distribuição Cauchy Padrão e Amostra desconhecida G
+```
+- Distribuição Cauchy Padrão e Amostra desconhecida G
 
+```{r}
 delta_est(c_50,amostra_G)
 
 delta_est(c_100,amostra_G)
 
 delta_est(c_150,amostra_G)
+```
+
+##### (d) Segundo seus cálculos, qual é a distribuição desconhecida G?
+
+ - Os resultados da função distância indica uma proximidade muito grande entre a função G e a normal Padrão, o que indica que G segue uma N(0,1).
 
 
+
+### 3. Estimador não Viciado de mínima variância
+
+##### Sejam X1,X2,···,Xm e Y1,Y2,···,Yn amostras independentes de duas distribuições absolutamente contínuas. Encontre o estimador não viciado de mínima variância de: 
+
+```{r}
+X <- rnorm(10000,5,3)
+
+Y <- rexp(15000,4)
+```
+
+ -  (a) E(XY)
+```{r}
+
+mean(X)*mean(Y) #Se independentes, a E(XY) = E(X)*E(Y)
+
+
+```
+ -  (b) Var(X + Y).
+```{r}
+
+var(X) + var(Y) #Se independentes, VAR(X + Y) = VAR(X) + VAR(Y)
+
+```
+### 4. Função densidade Estimada
+
+Podemos considerar a densidade kernel estimada como a função de densidade de uma amostra, como obter então novas amostras?  
+
+Como o estimador kernel da função de densidade  
+
+$$
+f_{bn}(x) = \frac{1}{n h_n} \sum_{i=1}^{n} K \left( \frac{x - X_i}{h_n} \right)
+$$  
+
+é uma mistura de \(n\) componentes de kernel, cada um pode ser amostrado independentemente.  
+
+A única parte que pode exigir tratamento especial é a amostragem da densidade \(K\), embora para a maioria dos kernels implementados R possam ser encontradas funções de amostragem específicas.  
+
+Consideremos os dados em:  
+
+
+```{r}
+phipsi <- read.csv("http://leg.ufpr.br/~lucambio/Nonparam/phipsi.csv", 
+                   sep = ",", header = TRUE)
+```
+
+Execute o seguinte algoritmo para gerar amostras de tamanho N, a
+partir da densidade kernel estimada dos dados em phipsi:
+
+ - (i)  Escolha i ∈ {1,···,n} aleatoriamente.;
+```{r}
+
+```
+ - (ii) Obtenha um amostra de tamanho 1 da densidade K, caso utilizese a densidade gaussiana, a média é Xi e o desvio padrão é hn;
+```{r}
+
+```
+ 
+ - (iii) Repita os passos anteriores N vezes;
+```{r}
+
+```
+
+Obtenha uma amostra de tamanho N = 600 da variável ψ (phipsi$psi)
+utilizando o algoritmo acima e compare a densidade estimada da nova
+amostra com a densidade estimada de ψ. Esta compara¸c˜ao pode ser
+graficamente.
+```{r}
 
 ```
 

@@ -1,6 +1,6 @@
 ---
 title: "Trabalho No.1"
-output: html_notebook
+output: html_document
 ---
 
 # Exercício  
@@ -281,6 +281,9 @@ Consideremos os dados em:
 ```{r}
 phipsi <- read.csv("http://leg.ufpr.br/~lucambio/Nonparam/phipsi.csv", 
                    sep = ",", header = TRUE)
+
+
+psi <- phipsi$psi
 ```
 
 Execute o seguinte algoritmo para gerar amostras de tamanho N, a
@@ -288,16 +291,27 @@ partir da densidade kernel estimada dos dados em phipsi:
 
  - (i)  Escolha i ∈ {1,···,n} aleatoriamente.;
 ```{r}
+n <- length(psi)
 
+hn <- density(psi)$bw
+
+i <- sample(1:n,size = 1)
 ```
  - (ii) Obtenha um amostra de tamanho 1 da densidade K, caso utilizese a densidade gaussiana, a média é Xi e o desvio padrão é hn;
 ```{r}
 
+  i <- sample(1:n, 1)  
+  amostra_kernel <- rnorm(1, mean = psi[i], sd = hn)  
 ```
  
  - (iii) Repita os passos anteriores N vezes;
 ```{r}
+amostra_kernel <- numeric(600)
 
+for (j in 1:600) {
+  i <- sample(1:n, 1)  # Passo (i)
+  amostra_kernel[j] <- rnorm(1, mean = psi[i], sd = hn)  # Passo (ii)
+}
 ```
 
 Obtenha uma amostra de tamanho N = 600 da variável ψ (phipsi$psi)
@@ -305,7 +319,9 @@ utilizando o algoritmo acima e compare a densidade estimada da nova
 amostra com a densidade estimada de ψ. Esta compara¸c˜ao pode ser
 graficamente.
 ```{r}
+hist(amostra_kernel)
 
+hist(psi)
 ```
 
 

@@ -1,0 +1,83 @@
+---
+title: "Trabalho No.2"
+output: html_notebook
+---
+
+
+# Exercício  
+
+
+## 1.Experimento para quadros depressivos
+
+
+Um grupo de pesquisadores na Austrália conduziu uma intervenção dietética curta, de três semanas, em um experimento controlado randomizado. No estudo, 75 estudantes em idade universitária com sintomas de depressão elevados e hábitos alimentares relativamente inadequados foram aleatoriamente designados para um grupo de intervenção com dieta saudável ou para um grupo de controle. Os pesquisadores registraram a mudança ao longo do período de três semanas em duas escalas numéricas diferentes de depressão, a escala CESD e a escala DASS. A escala CESD (Centro de Estudos Epidemiológicos de Depressão) baseia-se mais em observações clínicas, enquanto a DASS (Escala de Depressão, Ansiedade e Estresse) depende mais de informações autorreferidas. Eles também registraram o índice de massa corporal (IMC) no início e no final do período de 21 dias.
+
+
+
+```{r}
+
+dados <- read.csv2("http://leg.ufpr.br/~lucambio/CE313/20241S/DietDepression.csv") ; dados
+```
+
+
+
+O arquivo de dados dispõe das seguintes informações:
+Group: Controle (Control) ou Dieta (Diet)
+CESD1: Pontuação de depressão CESD no Dia 1
+CESD21: Pontuação de depressão CESD no dia 21
+CESDDiff: Mudança na pontuação de depressão CESD
+DASS1: Pontuação de depressão DASS no Dia 1
+DASS21: Pontuação de depressão DASS no dia 21
+DASSDiff: Mudança na pontuação de depressão DASS
+BMI1: Índice de Massa Corporal (IMC) no Dia 1
+BMI21: Índice de Massa Corporal (IMC) no Dia 21
+BMIDiff: Mudança no Índice de Massa Corporal (IMC)
+
+
+Utilizando técnicas de reamostragem, queremos saber:
+
+ - (a) Existem diferenças entre as formas de medir a depressão CESD e DASS? Em geral e entre os grupos?
+
+```{r}
+# Função para bootstrap da diferença entre CESD e DASS
+bootstrap_diff <- function(data, n_iter = 10000) {
+  diffs <- numeric(n_iter)
+  for (i in 1:n_iter) {
+    amostra <- data[sample(1:nrow(data), replace = TRUE), ]
+    diffs[i] <- mean(amostra$CESDDiff) - mean(amostra$DASSDiff)
+  }
+  return(diffs)
+}
+
+# ----- GERAL -----
+boot_geral <- bootstrap_diff(dados)
+ic_geral <- quantile(boot_geral, c(0.025, 0.975))
+
+cat("Diferença média geral:", mean(dados$CESDDiff) - mean(dados$DASSDiff), "\n")
+cat("Intervalo de confiança (95%) - GERAL:\n")
+print(ic_geral)
+
+# ----- POR GRUPO -----
+# Grupo: Controle
+controle <- subset(dados, Group == "Control")
+boot_controle <- bootstrap_diff(controle)
+ic_controle <- quantile(boot_controle, c(0.025, 0.975))
+
+# Grupo: Dieta
+dieta <- subset(dados, Group == "Diet")
+boot_dieta <- bootstrap_diff(dieta)
+ic_dieta <- quantile(boot_dieta, c(0.025, 0.975))
+
+cat("\nDiferença média - Controle:", mean(controle$CESDDiff) - mean(controle$DASSDiff), "\n")
+cat("Intervalo de confiança (95%) - Controle:\n")
+print(ic_controle)
+
+cat("\nDiferença média - Dieta:", mean(dieta$CESDDiff) - mean(dieta$DASSDiff), "\n")
+cat("Intervalo de confiança (95%) - Dieta:\n")
+print(ic_dieta)
+
+
+
+```
+
+

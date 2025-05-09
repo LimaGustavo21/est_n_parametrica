@@ -1,0 +1,88 @@
+---
+title: "Trabalho 1 - Design e Análise de Experimentos"
+author: "Seu Nome | Nome dos colegas"
+date: "06/05/2025"
+output: html_document
+---
+
+###  Questão 1 — Descreva a unidade experimental.
+
+No contexto deste experimento, a unidade experimental é **um helicóptero de papel**.  
+
+
+### Questão 2 — Defina os conceitos de réplicas e duplicatas. Explique a diferença entre réplicas e duplicatas para esta situação.
+
+##### Réplicas
+
+- Réplicas são **repetições independentes de um mesmo tratamento** em diferentes unidades experimentais. O objetivo das réplicas é estimar a  variabilidade experimental e melhorar a precisão da comparação entre tratamentos.
+
+##### Duplicatas
+
+ - Duplicatas, por outro lado, são **medidas repetidas na mesma unidade experimental** ou condições idênticas, sem alteração entre as execuções. Elas são usadas para verificar a repetibilidade do sistema de medição e não para estimar a variabilidade do processo.
+
+##### Diferença entre Réplicas e Duplicatas neste experimento com helicópteros de papel:
+
+- **Réplicas**: fabricar e lançar **vários helicópteros diferentes com o mesmo comprimento de asa**, cronometrando o tempo de voo de cada um. Assim, há variação natural entre as unidades (helicópteros) mesmo sob o mesmo tratamento, o que permite avaliar a variabilidade experimental.
+
+- **Duplicatas**: lançar **o mesmo helicóptero duas vezes seguidas sob as mesmas condições** e medir o tempo de voo em ambas as ocasiões. Isso não ajuda a estimar a variabilidade entre unidades experimentais, mas sim a verificar se o sistema de medição (cronômetro, operador, ambiente) é consistente.
+
+Para este estudo, o ideal e estatisticamente correto é trabalhar com **réplicas** e não duplicatas, pois o interesse está em avaliar como diferentes comprimentos de asa afetam o tempo de voo em unidades experimentais independentes.
+
+
+
+### Questão 3 — Descreva o fator de tratamento.
+
+O fator de tratamento é o comprimento da asa dos helicópteros de papel.
+
+Esse fator possui quatro níveis :
+
+4,00 polegadas
+
+4,75 polegadas
+
+5,50 polegadas
+
+6,00 polegadas
+
+Cada nível corresponde a um comprimento específico das asas dos helicópteros, sendo aplicado durante a confecção de cada unidade experimental.
+
+O objetivo do experimento é investigar se o comprimento da asa (fator de tratamento) influencia significativamente o tempo de voo dos helicópteros.
+
+
+
+### Questão 4 — Descreva quaisquer variáveis ocultas que possam afetar os resultados dos experimentos.
+
+Variáveis ocultas (também chamadas de variáveis de confusão ou fatores não controlados) são aquelas que não fazem parte do projeto experimental, mas que podem influenciar a variável de resposta, introduzindo viés ou aumentando a variabilidade dos resultados.
+
+##### Possíveis variáveis ocultas neste experimento:
+
+- **Altura de lançamento**: pequenas variações na altura de onde o helicóptero é solto podem afetar o tempo de voo.
+  
+- **Correntes de ar ou vento**: movimentos de ar no ambiente (mesmo em local fechado) podem alterar a trajetória e o tempo de descida do helicóptero.
+  
+- **Forma de lançamento**: a maneira como o helicóptero é solto (posição inicial, inclinação ou força aplicada) pode afetar seu comportamento no ar.
+  
+- **Precisão da cronometragem**: variações no tempo de reação da pessoa que aciona o cronômetro ao iniciar e parar a medição.
+  
+
+### Questão 5 — Explique por que a randomização seria importante.
+
+A randomização é uma técnica que consiste em **aleatorizar a ordem de aplicação dos tratamentos nas unidades experimentais**.  
+
+##### Importância da randomização:
+
+- **Elimina ou reduz o efeito de variáveis ocultas**: ao aleatorizar a ordem dos lançamentos e a atribuição dos tratamentos, diminui-se a chance de que fatores não controlados (como correntes de ar, cansaço do operador ou variações na altura de lançamento) afetem sistematicamente determinados tratamentos.
+
+- **Garante independência das observações**: ao randomizar, asseguramos que os resultados de uma unidade experimental não influenciem os resultados de outra.
+
+### No contexto deste experimento:
+
+Deve-se randomizar a ordem dos lançamentos dos helicópteros com diferentes comprimentos de asa. Assim, por exemplo, não se corre o risco de lançar todos os helicópteros de 6” seguidos (que poderiam coincidir com uma corrente), o que poderia distorcer os resultados.
+
+
+---
+
+---
+
+
+

@@ -34,5 +34,10 @@ abline(h=0, col="red")
 bartlett.test(tempo ~ tratamento, data = dados)
 
 
+#Teste de tukey para verificar diferença entre os tratamentos
+TukeyHSD(anova_result)
+
+
+
 
 

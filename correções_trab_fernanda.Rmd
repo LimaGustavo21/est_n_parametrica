@@ -1,0 +1,100 @@
+---
+title: "Trabalho Fernanda"
+output: html_document
+date: "2025-05-16"
+---
+
+
+Projeto e Análise de Experimento com Helicópteros de Papel: Avaliação de Fatores e Variabilidade
+Eduardo Demetrio | Gustavo Lima | João Moro | Vitor Zambaldi
+Data de execução do experimento: 07/05/2025
+Questão 1
+
+Descreva a unidade experimental.
+
+Resposta:
+
+(correção)No contexto do experimento, a unidade experimental é um helicóptero de papel.
+
+Questão 2
+
+Defina os conceitos de réplicas e duplicatas. Explique a diferença entre réplicas e duplicatas para esta situação.
+
+Resposta:
+Réplicas
+
+    Réplicas são repetições independentes de um mesmo tratamento em diferentes unidades experimentais. O objetivo das réplicas é estimar a variabilidade experimental e melhorar a precisão da comparação entre tratamentos.
+
+Duplicatas
+
+    Duplicatas, por outro lado, são medidas repetidas na mesma unidade experimental ou condições idênticas, sem alteração entre as execuções. Elas são usadas para verificar a repetibilidade do sistema de medição e não para estimar a variabilidade do processo.
+
+Diferença entre Réplicas e Duplicatas neste experimento com helicópteros de papel:
+
+    (correção)Réplicas: moldar e lançar vários helicópteros diferentes com o mesmo comprimento de asa, cronometrando o tempo de voo de cada um. Assim, há variação natural entre as unidades (helicópteros) mesmo sob o mesmo tratamento, o que permite avaliar a variabilidade experimental.
+
+    Duplicatas : lançar o mesmo helicóptero duas vezes seguidas sob as mesmas condições e medir o tempo de voo em ambas as ocasiões. Isso não ajuda a estimar a variabilidade entre unidades experimentais, mas sim a verificar se o sistema de medição (cronômetro, operador, ambiente) é consistente.
+
+(correção)Para este estudo, o ideal é trabalhar com réplicas e não duplicatas, pois o interesse está em avaliar como diferentes comprimentos de asa afetam o tempo de voo em unidades experimentais.
+Questão 3
+
+Descreva o fator de tratamento.
+
+Resposta:
+O fator de tratamento é o comprimento da asa dos helicópteros de papel .
+
+Esse fator possui quatro níveis :
+
+    4,00 polegadas
+
+    4,75 polegadas
+
+    5,50 polegadas
+
+    6,00 polegadas
+
+Cada nível corresponde a um comprimento específico das asas dos helicópteros, sendo aplicado durante a confecção de cada unidade experimental.
+
+O objetivo do experimento é investigar se o comprimento da asa (fator de tratamento) influencia significativamente o tempo de voo dos helicópteros.
+Questão 4
+
+Descreva quaisquer variáveis ocultas que possam afetar os resultados dos experimentos.
+
+Resposta:
+(correção)Variáveis ocultas são aquelas variáveis que não fazem parte do projeto experimental, mas que podem influenciar a variável de resposta, com um aumento de viés ou na variação não captada pela modelagem.
+
+(correção)Alguns exemplos de variáveis ocultas no experimento: vento durante o lançamento / Altura de lançamento / Forma de lançamento
+
+Questão 5
+
+Explique por que a randomização seria importante.
+
+Resposta:
+
+  A randomização é importante por diversos fatores, como ajudar a reduzir o efeito de variáveis ocultas fazendo com que essa variação afeto de forma independente entre as observações reduzindo o viés da análise.
+
+
+No contexto deste experimento:
+
+(correção) Deve-se randomizar a ordem dos lançamentos dos helicópteros com diferentes comprimentos de asa. Assim, por exemplo, não se corre o risco de lançar todos os helicópteros de 6” seguidos que poderiam coincidir com fator de variável oculta momentâneo que poderia distorcer os resultados. 
+
+
+
+
+
+Questão 8
+
+Realize uma análise de variancia com seus dados.
+
+Com base no resultado da tabela ANOVA, considerando um teste de hipótese em que H0 corresponde à afirmação de que não há diferença significativa no tempo de voo em função das diferentes medidas, e H1 indica que pelo menos uma medida resulta em um tempo de voo distinto, podemos concluir que, ao nível de significância de 5%, há evidências significativas para rejeitar H0. Pelo menos uma das medidas apresenta diferença significativa em relação às demais.
+
+
+#Teste de Tukey - 
+
+
+
+Com base nos resultados do teste de tukey, temos que H1 = H2 / H3 = H2 / H3 = H4 (Considerando alpha padrão de 5%). Entretanto, se considerassemos um alpha de 10%, teriamos como resultado H1 = H2 e H3 = H4. Com isso, podemos concluir que Asas maiores tem diferença positiva significativamento no tempo de voo se comparada com asas menores.
+
+
+
+
